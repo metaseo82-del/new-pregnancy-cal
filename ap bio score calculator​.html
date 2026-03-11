@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AP Bio Score Calculator</title>
+  <style>
+    :root {
+      --bg: #0b1020;
+      --panel: rgba(18, 24, 48, 0.82);
+      --panel-2: rgba(255, 255, 255, 0.08);
+      --text: #eef2ff;
+      --muted: #b6c0e0;
+      --accent: #70e1c8;
+      --accent-2: #7aa2ff;
+      --danger: #ff7a90;
+      --shadow: 0 20px 50px rgba(0, 0, 0, 0.28);
+      --radius: 24px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(122, 162, 255, 0.24), transparent 28%),
+        radial-gradient(circle at bottom right, rgba(112, 225, 200, 0.18), transparent 28%),
+        linear-gradient(145deg, #07101f, #101933 42%, #0b1020);
+      min-height: 100vh;
+      padding: 24px;
+    }
+
+    .app {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 22px;
+      align-items: start;
+    }
+
+    .card {
+      background: var(--panel);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .card-inner { padding: 28px; }
+
+    .hero {
+      margin-bottom: 18px;
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      align-items: flex-start;
+      flex-wrap: wrap;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      color: var(--accent);
+      background: rgba(112, 225, 200, 0.1);
+      border: 1px solid rgba(112, 225, 200, 0.2);
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2rem, 4vw, 3.4rem);
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+    }
+
+    .sub {
+      margin: 12px 0 0;
+      color: var(--muted);
+      font-size: 1rem;
+      max-width: 60ch;
+      line-height: 1.6;
+    }
+
+    .badge-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(120px, 1fr));
+      gap: 12px;
+      min-width: 270px;
+      flex: 1;
+    }
+
+    .mini {
+      background: var(--panel-2);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 18px;
+      padding: 14px;
+    }
+
+    .mini .label {
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    .mini .value {
+      font-size: 1.35rem;
+      font-weight: 700;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .section-title {
+      margin: 0 0 14px;
+      font-size: 1rem;
+      letter-spacing: 0.01em;
+    }
+
+    .field {
+      margin-bottom: 16px;
+    }
+
+    .field label {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 8px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .field .hint {
+      font-size: 0.82rem;
+      color: var(--muted);
+      opacity: 0.88;
+    }
+
+    input[type="number"],
+    select,
+    input[type="range"] {
+      width: 100%;
+    }
+
+    input[type="number"],
+    select {
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.06);
+      color: var(--text);
+      padding: 14px 16px;
+      border-radius: 16px;
+      outline: none;
+      font-size: 1rem;
+      transition: border-color 0.2s ease, transform 0.2s ease, background 0.2s ease;
+    }
+
+    select option { color: #111827; }
+
+    input[type="number"]:focus,
+    select:focus {
+      border-color: rgba(122, 162, 255, 0.7);
+      background: rgba(255,255,255,0.08);
+      transform: translateY(-1px);
+    }
+
+    input[type="range"] {
+      appearance: none;
+      height: 8px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      outline: none;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      appearance: none;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: 3px solid white;
+      background: var(--accent-2);
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.24);
+    }
+
+    .segmented {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .segmented button {
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.05);
+      color: var(--text);
+      padding: 12px 10px;
+      border-radius: 14px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: 0.2s ease;
+    }
+
+    .segmented button.active,
+    .segmented button:hover {
+      background: linear-gradient(135deg, rgba(112,225,200,0.22), rgba(122,162,255,0.22));
+      border-color: rgba(112,225,200,0.35);
+      transform: translateY(-1px);
+    }
+
+    .result-card {
+      position: sticky;
+      top: 24px;
+    }
+
+    .score-shell {
+      background: linear-gradient(145deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 24px;
+      padding: 24px;
+      margin-bottom: 18px;
+    }
+
+    .score-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .score-title { color: var(--muted); font-size: 0.92rem; }
+
+    .pill {
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      background: rgba(112,225,200,0.12);
+      border: 1px solid rgba(112,225,200,0.25);
+      color: var(--accent);
+    }
+
+    .big-score {
+      display: flex;
+      align-items: flex-end;
+      gap: 14px;
+      margin-bottom: 8px;
+    }
+
+    .big-score .number {
+      font-size: clamp(4rem, 9vw, 6rem);
+      font-weight: 800;
+      line-height: 0.9;
+      letter-spacing: -0.06em;
+    }
+
+    .big-score .meta {
+      color: var(--muted);
+      font-size: 1rem;
+      padding-bottom: 10px;
+    }
+
+    .bar-wrap {
+      height: 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.08);
+      overflow: hidden;
+      margin: 16px 0 10px;
+    }
+
+    .bar {
+      height: 100%;
+      width: 0;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      transition: width 0.35s ease;
+    }
+
+    .grid-stats {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .stat {
+      border-radius: 18px;
+      padding: 14px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .stat .k {
+      display: block;
+      color: var(--muted);
+      font-size: 0.8rem;
+      margin-bottom: 6px;
+    }
+
+    .stat .v {
+      font-size: 1.15rem;
+      font-weight: 700;
+    }
+
+    .curve-table {
+      width: 100%;
+      border-collapse: collapse;
+      overflow: hidden;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .curve-table th,
+    .curve-table td {
+      padding: 12px 14px;
+      text-align: left;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      font-size: 0.95rem;
+    }
+
+    .curve-table th {
+      color: var(--muted);
+      font-weight: 600;
+      background: rgba(255,255,255,0.03);
+    }
+
+    .curve-table tr:last-child td { border-bottom: 0; }
+
+    .note {
+      margin-top: 16px;
+      padding: 14px 16px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.04);
+      color: var(--muted);
+      line-height: 1.55;
+      font-size: 0.93rem;
+    }
+
+    .actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+
+    .btn {
+      border: 0;
+      cursor: pointer;
+      padding: 14px 18px;
+      border-radius: 16px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+
+    .btn.primary {
+      color: #061017;
+      background: linear-gradient(135deg, var(--accent), #8ce2ff);
+    }
+
+    .btn.secondary {
+      color: var(--text);
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .btn:hover { transform: translateY(-1px); }
+
+    .foot {
+      margin-top: 16px;
+      color: var(--muted);
+      font-size: 0.84rem;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 980px) {
+      .app,
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .result-card {
+        position: static;
+      }
+    }
+
+    @media (max-width: 640px) {
+      body { padding: 14px; }
+      .card-inner { padding: 20px; }
+      .badge-grid,
+      .grid-stats,
+      .segmented {
+        grid-template-columns: 1fr;
+      }
+      .hero { gap: 14px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <section class="card">
+      <div class="card-inner">
+        <div class="hero">
+          <div>
+            <div class="eyebrow">AP Biology • Responsive HTML Tool</div>
+            <h1>AP Bio Score Calculator</h1>
+            <p class="sub">
+              Estimate your AP Biology score using multiple-choice and free-response performance.
+              Adjust the <strong>compression level</strong> to simulate a stricter or more lenient score curve.
+            </p>
+          </div>
+
+          <div class="badge-grid">
+            <div class="mini">
+              <span class="label">Multiple Choice</span>
+              <span class="value">60 questions</span>
+            </div>
+            <div class="mini">
+              <span class="label">Free Response</span>
+              <span class="value">6 questions</span>
+            </div>
+            <div class="mini">
+              <span class="label">Weighted Formula</span>
+              <span class="value">50 / 50 blend</span>
+            </div>
+            <div class="mini">
+              <span class="label">Curve Mode</span>
+              <span class="value" id="curvePreview">Standard</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="layout">
+          <div>
+            <h2 class="section-title">Input your performance</h2>
+
+            <div class="field">
+              <label for="mcqCorrect">
+                <span>MCQ correct answers</span>
+                <span class="hint">0 to 60</span>
+              </label>
+              <input type="number" id="mcqCorrect" min="0" max="60" value="42" />
+            </div>
+
+            <div class="field">
+              <label for="frqRaw">
+                <span>Total FRQ raw points</span>
+                <span class="hint">0 to 48</span>
+              </label>
+              <input type="number" id="frqRaw" min="0" max="48" value="31" />
+            </div>
+
+            <div class="field">
+              <label for="compressionMode">
+                <span>Compression level</span>
+                <span class="hint">Changes how tightly final scores map to AP 1–5</span>
+              </label>
+              <select id="compressionMode">
+                <option value="lenient">Lenient</option>
+                <option value="standard" selected>Standard</option>
+                <option value="strict">Strict</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="optimizationLevel">
+                <span>Optimization strength</span>
+                <span class="hint"><span id="optimizationValue">50</span>% curve sensitivity</span>
+              </label>
+              <input type="range" id="optimizationLevel" min="0" max="100" value="50" />
+            </div>
+
+            <div class="field">
+              <label>
+                <span>Quick presets</span>
+                <span class="hint">Instantly load a scenario</span>
+              </label>
+              <div class="segmented">
+                <button type="button" data-preset="cautious">Cautious</button>
+                <button type="button" data-preset="target">Target 4</button>
+                <button type="button" data-preset="elite">Target 5</button>
+              </div>
+            </div>
+
+            <div class="actions">
+              <button class="btn primary" id="calculateBtn">Recalculate Score</button>
+              <button class="btn secondary" id="resetBtn">Reset</button>
+            </div>
+
+            <div class="foot">
+              This calculator is an estimate only. AP score conversions vary by exam form and year,
+              so use this tool for planning and practice rather than official score prediction.
+            </div>
+          </div>
+
+          <div>
+            <h2 class="section-title">How the calculator works</h2>
+            <table class="curve-table">
+              <thead>
+                <tr>
+                  <th>Component</th>
+                  <th>Method</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>MCQ scaling</td>
+                  <td>Correct answers are converted to a 50-point share.</td>
+                </tr>
+                <tr>
+                  <td>FRQ scaling</td>
+                  <td>Raw FRQ points are converted to a 50-point share.</td>
+                </tr>
+                <tr>
+                  <td>Composite score</td>
+                  <td>MCQ + FRQ are combined into a 100-point estimate.</td>
+                </tr>
+                <tr>
+                  <td>Compression level</td>
+                  <td>Alters cutoffs to simulate lenient, standard, or strict curves.</td>
+                </tr>
+                <tr>
+                  <td>Optimization</td>
+                  <td>Fine-tunes how strongly the selected compression affects cutoffs.</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div class="note" id="explanationBox">
+              With the current settings, the score curve uses a balanced threshold profile.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <aside class="card result-card">
+      <div class="card-inner">
+        <div class="score-shell">
+          <div class="score-top">
+            <div>
+              <div class="score-title">Estimated AP Biology score</div>
+            </div>
+            <div class="pill" id="curveBadge">Standard Curve</div>
+          </div>
+
+          <div class="big-score">
+            <div class="number" id="apScore">4</div>
+            <div class="meta" id="scoreLabel">Likely college-ready range</div>
+          </div>
+
+          <div>Composite estimate: <strong id="compositeScore">68.5</strong> / 100</div>
+          <div class="bar-wrap">
+            <div class="bar" id="progressBar"></div>
+          </div>
+          <div class="hint" id="thresholdHint">5-point threshold starts near 77</div>
+
+          <div class="grid-stats">
+            <div class="stat">
+              <span class="k">MCQ contribution</span>
+              <span class="v" id="mcqContribution">35.0 / 50</span>
+            </div>
+            <div class="stat">
+              <span class="k">FRQ contribution</span>
+              <span class="v" id="frqContribution">32.3 / 50</span>
+            </div>
+            <div class="stat">
+              <span class="k">Percent correct</span>
+              <span class="v" id="percentCorrect">67.3%</span>
+            </div>
+            <div class="stat">
+              <span class="k">Projected range</span>
+              <span class="v" id="projectedRange">3–4</span>
+            </div>
+          </div>
+        </div>
+
+        <h2 class="section-title">Current score curve</h2>
+        <table class="curve-table" id="cutoffTable">
+          <thead>
+            <tr>
+              <th>AP Score</th>
+              <th>Estimated cutoff</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+
+        <div class="note" id="recommendationBox">
+          You are within reach of a 4. Raising either MCQ or FRQ performance by a modest margin could push you higher.
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <script>
+    const elements = {
+      mcqCorrect: document.getElementById('mcqCorrect'),
+      frqRaw: document.getElementById('frqRaw'),
+      compressionMode: document.getElementById('compressionMode'),
+      optimizationLevel: document.getElementById('optimizationLevel'),
+      optimizationValue: document.getElementById('optimizationValue'),
+      curvePreview: document.getElementById('curvePreview'),
+      curveBadge: document.getElementById('curveBadge'),
+      apScore: document.getElementById('apScore'),
+      scoreLabel: document.getElementById('scoreLabel'),
+      compositeScore: document.getElementById('compositeScore'),
+      progressBar: document.getElementById('progressBar'),
+      thresholdHint: document.getElementById('thresholdHint'),
+      mcqContribution: document.getElementById('mcqContribution'),
+      frqContribution: document.getElementById('frqContribution'),
+      percentCorrect: document.getElementById('percentCorrect'),
+      projectedRange: document.getElementById('projectedRange'),
+      cutoffTable: document.querySelector('#cutoffTable tbody'),
+      explanationBox: document.getElementById('explanationBox'),
+      recommendationBox: document.getElementById('recommendationBox'),
+      calculateBtn: document.getElementById('calculateBtn'),
+      resetBtn: document.getElementById('resetBtn'),
+      presetButtons: document.querySelectorAll('[data-preset]')
+    };
+
+    const baseCutoffs = {
+      lenient: {5: 74, 4: 61, 3: 47, 2: 33},
+      standard: {5: 77, 4: 64, 3: 50, 2: 36},
+      strict: {5: 81, 4: 68, 3: 54, 2: 40}
+    };
+
+    const modeCopy = {
+      lenient: 'A lenient compression profile slightly relaxes score thresholds, helpful for optimistic practice estimates.',
+      standard: 'A standard compression profile uses balanced thresholds for a realistic, moderate estimate.',
+      strict: 'A strict compression profile raises score thresholds, producing a more conservative projection.'
+    };
+
+    function clamp(value, min, max) {
+      return Math.min(Math.max(value, min), max);
+    }
+
+    function round(num, digits = 1) {
+      return Number(num.toFixed(digits));
+    }
+
+    function getAdjustedCutoffs(mode, optimization) {
+      const cutoffs = { ...baseCutoffs[mode] };
+      const strength = (optimization - 50) / 50;
+
+      Object.keys(cutoffs).forEach((key) => {
+        const numericKey = Number(key);
+        const weight = numericKey === 5 ? 2.4 : numericKey === 4 ? 1.6 : numericKey === 3 ? 1.1 : 0.8;
+        cutoffs[key] = round(cutoffs[key] + strength * weight, 1);
+      });
+
+      return cutoffs;
+    }
+
+    function calculateScore() {
+      const mcq = clamp(Number(elements.mcqCorrect.value) || 0, 0, 60);
+      const frq = clamp(Number(elements.frqRaw.value) || 0, 0, 48);
+      const mode = elements.compressionMode.value;
+      const optimization = Number(elements.optimizationLevel.value);
+      const cutoffs = getAdjustedCutoffs(mode, optimization);
+
+      const mcqScaled = (mcq / 60) * 50;
+      const frqScaled = (frq / 48) * 50;
+      const composite = mcqScaled + frqScaled;
+      const percent = ((mcq + frq) / 108) * 100;
+
+      let apScore = 1;
+      if (composite >= cutoffs[5]) apScore = 5;
+      else if (composite >= cutoffs[4]) apScore = 4;
+      else if (composite >= cutoffs[3]) apScore = 3;
+      else if (composite >= cutoffs[2]) apScore = 2;
+
+      const labels = {
+        5: 'Excellent projected performance',
+        4: 'Likely college-ready range',
+        3: 'Passing range estimate',
+        2: 'Below typical passing range',
+        1: 'Needs stronger overall performance'
+      };
+
+      const ranges = {
+        5: '4–5',
+        4: '3–4',
+        3: '2–3',
+        2: '1–2',
+        1: '1–2'
+      };
+
+      elements.curvePreview.textContent = mode.charAt(0).toUpperCase() + mode.slice(1);
+      elements.curveBadge.textContent = (mode.charAt(0).toUpperCase() + mode.slice(1)) + ' Curve';
+      elements.apScore.textContent = apScore;
+      elements.scoreLabel.textContent = labels[apScore];
+      elements.compositeScore.textContent = round(composite, 1).toFixed(1);
+      elements.progressBar.style.width = `${clamp(composite, 0, 100)}%`;
+      elements.thresholdHint.textContent = `5-point threshold starts near ${cutoffs[5].toFixed(1)}`;
+      elements.mcqContribution.textContent = `${round(mcqScaled, 1).toFixed(1)} / 50`;
+      elements.frqContribution.textContent = `${round(frqScaled, 1).toFixed(1)} / 50`;
+      elements.percentCorrect.textContent = `${round(percent, 1).toFixed(1)}%`;
+      elements.projectedRange.textContent = ranges[apScore];
+      elements.explanationBox.textContent = `${modeCopy[mode]} Optimization strength is currently set to ${optimization}%, which nudges cutoffs ${optimization > 50 ? 'higher' : optimization < 50 ? 'lower' : 'only minimally'}.`;
+
+      let recommendation = 'Keep building both content knowledge and timed practice.';
+      if (apScore === 5) {
+        recommendation = 'You are projecting at a 5. Focus on consistency under timed conditions so you can protect that ceiling.';
+      } else if (apScore === 4) {
+        recommendation = `You are within reach of a 5. Roughly ${Math.max(0, round(cutoffs[5] - composite, 1)).toFixed(1)} more composite points could move you up.`;
+      } else if (apScore === 3) {
+        recommendation = `You are on track to pass. About ${Math.max(0, round(cutoffs[4] - composite, 1)).toFixed(1)} more composite points could push you toward a 4.`;
+      } else if (apScore === 2) {
+        recommendation = `A stronger review cycle could help. About ${Math.max(0, round(cutoffs[3] - composite, 1)).toFixed(1)} more composite points may put you into passing territory.`;
+      } else {
+        recommendation = `Start with high-yield review and practice. About ${Math.max(0, round(cutoffs[2] - composite, 1)).toFixed(1)} more composite points would likely move you into the 2 range.`;
+      }
+      elements.recommendationBox.textContent = recommendation;
+
+      renderCutoffTable(cutoffs, composite);
+    }
+
+    function renderCutoffTable(cutoffs, composite) {
+      elements.cutoffTable.innerHTML = '';
+      [5, 4, 3, 2].forEach((score) => {
+        const row = document.createElement('tr');
+        const scoreCell = document.createElement('td');
+        const cutoffCell = document.createElement('td');
+        scoreCell.textContent = score;
+        const delta = round(cutoffs[score] - composite, 1);
+        cutoffCell.textContent = `${cutoffs[score].toFixed(1)} ${delta <= 0 ? '(reached)' : `(${delta.toFixed(1)} away)`}`;
+        row.appendChild(scoreCell);
+        row.appendChild(cutoffCell);
+        elements.cutoffTable.appendChild(row);
+      });
+    }
+
+    function setPreset(name) {
+      if (name === 'cautious') {
+        elements.mcqCorrect.value = 34;
+        elements.frqRaw.value = 24;
+        elements.compressionMode.value = 'strict';
+        elements.optimizationLevel.value = 65;
+      } else if (name === 'target') {
+        elements.mcqCorrect.value = 41;
+        elements.frqRaw.value = 30;
+        elements.compressionMode.value = 'standard';
+        elements.optimizationLevel.value = 50;
+      } else if (name === 'elite') {
+        elements.mcqCorrect.value = 50;
+        elements.frqRaw.value = 39;
+        elements.compressionMode.value = 'lenient';
+        elements.optimizationLevel.value = 35;
+      }
+      elements.optimizationValue.textContent = elements.optimizationLevel.value;
+      calculateScore();
+    }
+
+    function resetAll() {
+      elements.mcqCorrect.value = 42;
+      elements.frqRaw.value = 31;
+      elements.compressionMode.value = 'standard';
+      elements.optimizationLevel.value = 50;
+      elements.optimizationValue.textContent = '50';
+      calculateScore();
+    }
+
+    [elements.mcqCorrect, elements.frqRaw, elements.compressionMode].forEach((el) => {
+      el.addEventListener('input', calculateScore);
+      el.addEventListener('change', calculateScore);
+    });
+
+    elements.optimizationLevel.addEventListener('input', () => {
+      elements.optimizationValue.textContent = elements.optimizationLevel.value;
+      calculateScore();
+    });
+
+    elements.calculateBtn.addEventListener('click', calculateScore);
+    elements.resetBtn.addEventListener('click', resetAll);
+
+    elements.presetButtons.forEach((button) => {
+      button.addEventListener('click', () => setPreset(button.dataset.preset));
+    });
+
+    calculateScore();
+  </script>
+</body>
+</html>
