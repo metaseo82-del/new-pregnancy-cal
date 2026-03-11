@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Half Birthday Calculator | Find Your 6-Month Birthday Instantly</title>
+  <meta name="description" content="Use this responsive Half Birthday Calculator to find your next half birthday, recent half birthday, age in half-years, and days remaining. Includes SEO optimization, ad-ready sections, and configurable performance compression levels." />
+  <meta name="keywords" content="half birthday calculator, 6 month birthday calculator, next half birthday, birthday calculator, age calculator, responsive calculator" />
+  <meta name="author" content="OpenAI" />
+  <meta name="robots" content="index, follow, max-image-preview:large" />
+  <link rel="canonical" href="https://example.com/half-birthday-calculator" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Half Birthday Calculator | Find Your 6-Month Birthday Instantly" />
+  <meta property="og:description" content="Calculate your next half birthday, recent half birthday, and days remaining with this fast, mobile-friendly tool." />
+  <meta property="og:url" content="https://example.com/half-birthday-calculator" />
+  <meta property="og:image" content="https://example.com/assets/half-birthday-calculator-preview.jpg" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Half Birthday Calculator" />
+  <meta name="twitter:description" content="A responsive, SEO-friendly half birthday calculator with dynamic results and ad-ready layout." />
+  <meta name="twitter:image" content="https://example.com/assets/half-birthday-calculator-preview.jpg" />
+  <meta name="theme-color" content="#6d5efc" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Half Birthday Calculator",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "All",
+    "description": "A fully responsive half birthday calculator that finds your recent and upcoming half birthdays, age in half-years, and time remaining.",
+    "url": "https://example.com/half-birthday-calculator",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+
+  <!-- Google AdSense: Replace ca-pub-XXXXXXXXXXXXXXXX with your publisher ID -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
+
+  <style>
+    :root {
+      --bg: #0f1221;
+      --panel: #171b31;
+      --panel-2: #1d2340;
+      --text: #edf1ff;
+      --muted: #b8c0e0;
+      --brand: #6d5efc;
+      --brand-2: #29c7ac;
+      --danger: #ff6b7c;
+      --border: rgba(255,255,255,0.12);
+      --shadow: 0 20px 50px rgba(0,0,0,0.28);
+      --radius: 22px;
+      --radius-sm: 14px;
+      --container: 1180px;
+      --transition: 240ms ease;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(109, 94, 252, 0.25), transparent 25%),
+        radial-gradient(circle at top right, rgba(41, 199, 172, 0.18), transparent 22%),
+        linear-gradient(180deg, #0b0e1b 0%, #12162a 100%);
+      min-height: 100vh;
+      line-height: 1.55;
+    }
+
+    body[data-compression="high"] {
+      --shadow: 0 8px 20px rgba(0,0,0,0.18);
+      --transition: 140ms linear;
+    }
+
+    img { max-width: 100%; display: block; }
+    a { color: inherit; }
+
+    .container {
+      width: min(var(--container), calc(100% - 2rem));
+      margin: 0 auto;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(16px);
+      background: rgba(10, 12, 24, 0.72);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .topbar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.95rem 0;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .brand-badge {
+      width: 2.4rem;
+      height: 2.4rem;
+      display: grid;
+      place-items: center;
+      border-radius: 16px;
+      background: linear-gradient(135deg, var(--brand), var(--brand-2));
+      color: white;
+      box-shadow: var(--shadow);
+      font-size: 1.1rem;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      align-items: center;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      padding: 0.45rem 0.75rem;
+      border-radius: 999px;
+      transition: background var(--transition), color var(--transition);
+    }
+
+    .nav-links a:hover,
+    .nav-links a:focus-visible {
+      background: rgba(255,255,255,0.08);
+      color: var(--text);
+      outline: none;
+    }
+
+    header.hero {
+      padding: 3.8rem 0 2rem;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 1.5rem;
+      align-items: stretch;
+    }
+
+    .card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .hero-copy,
+    .hero-side,
+    .calculator,
+    .ad-panel,
+    .content-card,
+    .faq-card,
+    .notice {
+      padding: 1.35rem;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.84rem;
+      color: var(--brand-2);
+      background: rgba(41, 199, 172, 0.1);
+      border: 1px solid rgba(41, 199, 172, 0.2);
+      padding: 0.45rem 0.8rem;
+      border-radius: 999px;
+      margin-bottom: 0.9rem;
+      font-weight: 700;
+    }
+
+    h1, h2, h3 { line-height: 1.1; margin: 0 0 0.7rem; letter-spacing: -0.03em; }
+    h1 { font-size: clamp(2.2rem, 4vw, 4.2rem); }
+    h2 { font-size: clamp(1.5rem, 2.4vw, 2.2rem); }
+    h3 { font-size: 1.12rem; }
+
+    .lead {
+      font-size: 1.05rem;
+      color: var(--muted);
+      max-width: 62ch;
+      margin-bottom: 1rem;
+    }
+
+    .hero-points {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.85rem;
+      margin-top: 1rem;
+    }
+
+    .hero-point {
+      padding: 0.9rem;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .hero-point strong { display: block; font-size: 1rem; margin-bottom: 0.22rem; }
+    .hero-point span { color: var(--muted); font-size: 0.92rem; }
+
+    .hero-side {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 1rem;
+      background: linear-gradient(180deg, rgba(109,94,252,0.14), rgba(255,255,255,0.04));
+    }
+
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.8rem;
+    }
+
+    .stat {
+      padding: 0.95rem;
+      border-radius: 18px;
+      background: rgba(0,0,0,0.18);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .stat .label {
+      color: var(--muted);
+      font-size: 0.85rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .stat .value {
+      font-size: 1.2rem;
+      font-weight: 800;
+    }
+
+    main {
+      padding: 0 0 4rem;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 320px;
+      gap: 1.4rem;
+      align-items: start;
+    }
+
+    .section-stack {
+      display: grid;
+      gap: 1.4rem;
+    }
+
+    form {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+
+    label {
+      font-size: 0.93rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    input,
+    select,
+    button {
+      font: inherit;
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 14px;
+      padding: 0.9rem 1rem;
+      min-height: 3rem;
+    }
+
+    input,
+    select {
+      background: rgba(9, 12, 22, 0.9);
+      color: var(--text);
+      transition: border-color var(--transition), transform var(--transition), box-shadow var(--transition);
+    }
+
+    input:focus,
+    select:focus {
+      outline: none;
+      border-color: rgba(109,94,252,0.9);
+      box-shadow: 0 0 0 4px rgba(109,94,252,0.18);
+    }
+
+    .actions {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .btn {
+      cursor: pointer;
+      font-weight: 800;
+      border: none;
+      transition: transform var(--transition), opacity var(--transition), filter var(--transition);
+    }
+
+    .btn:hover { transform: translateY(-1px); }
+    .btn:active { transform: translateY(0); }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--brand), #8e67ff);
+      color: #fff;
+      box-shadow: var(--shadow);
+    }
+
+    .btn-secondary {
+      background: rgba(255,255,255,0.07);
+      color: var(--text);
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+
+    .hint {
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin: 0;
+    }
+
+    .results {
+      display: grid;
+      gap: 1rem;
+      margin-top: 0.8rem;
+    }
+
+    .result-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+    }
+
+    .result-item {
+      padding: 1rem;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 18px;
+      min-height: 120px;
+    }
+
+    .result-item .kicker {
+      color: var(--muted);
+      font-size: 0.85rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .result-item .main {
+      font-size: clamp(1.05rem, 2vw, 1.45rem);
+      font-weight: 800;
+      margin-bottom: 0.35rem;
+    }
+
+    .result-item .sub {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .notice {
+      background: rgba(255, 107, 124, 0.1);
+      border: 1px solid rgba(255, 107, 124, 0.2);
+      color: #ffd9de;
+      display: none;
+    }
+
+    .notice.show { display: block; }
+
+    .ad-panel {
+      position: sticky;
+      top: 88px;
+      display: grid;
+      gap: 1rem;
+    }
+
+    .ad-slot {
+      border-radius: 18px;
+      border: 1px dashed rgba(255,255,255,0.22);
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: 0.9rem;
+      min-height: 280px;
+      color: var(--muted);
+      overflow: hidden;
+    }
+
+    .ad-slot small { display: block; opacity: 0.85; }
+    .ad-slot.tall { min-height: 600px; }
+    .ad-slot.banner { min-height: 160px; }
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+    }
+
+    .faq-list {
+      display: grid;
+      gap: 0.85rem;
+    }
+
+    details {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 18px;
+      padding: 1rem 1rem 0.85rem;
+    }
+
+    summary {
+      cursor: pointer;
+      font-weight: 700;
+      list-style: none;
+    }
+
+    summary::-webkit-details-marker { display: none; }
+    details p { color: var(--muted); margin: 0.8rem 0 0; }
+
+    .inline-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.3rem 0.65rem;
+      border-radius: 999px;
+      background: rgba(109,94,252,0.12);
+      color: #d9d5ff;
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+
+    .footer {
+      padding: 1.8rem 0 3rem;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    body[data-compression="high"] .hero-point,
+    body[data-compression="high"] .result-item,
+    body[data-compression="high"] .stat,
+    body[data-compression="high"] details {
+      background: rgba(255,255,255,0.025);
+    }
+
+    body[data-compression="high"] * {
+      animation: none !important;
+    }
+
+    @media (max-width: 1024px) {
+      .hero-grid,
+      .layout,
+      .content-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .ad-panel {
+        position: static;
+      }
+
+      .ad-slot.tall { min-height: 250px; }
+    }
+
+    @media (max-width: 720px) {
+      header.hero { padding-top: 2.5rem; }
+      .hero-points,
+      .form-grid,
+      .result-grid,
+      .stat-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .topbar-inner {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .nav-links {
+        gap: 0.5rem;
+      }
+
+      .actions .btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body data-compression="medium">
+  <a class="sr-only" href="#calculator">Skip to calculator</a>
+
+  <nav class="topbar" aria-label="Primary">
+    <div class="container topbar-inner">
+      <a class="brand" href="#top" aria-label="Half Birthday Calculator home">
+        <span class="brand-badge">½</span>
+        <span>Half Birthday Calculator</span>
+      </a>
+      <div class="nav-links">
+        <a href="#calculator">Calculator</a>
+        <a href="#how-it-works">How it works</a>
+        <a href="#faq">FAQ</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero" id="top">
+    <div class="container hero-grid">
+      <section class="card hero-copy" aria-labelledby="hero-title">
+        <span class="eyebrow">Fast • Responsive • SEO Ready</span>
+        <h1 id="hero-title">Find your next half birthday in seconds</h1>
+        <p class="lead">
+          This half birthday calculator helps users instantly discover their next half birthday,
+          most recent half birthday, half-year age milestone, and the days remaining until the next celebration.
+        </p>
+        <div class="hero-points" aria-label="Key features">
+          <div class="hero-point">
+            <strong>Dynamic results</strong>
+            <span>Live calculations based on birth date and reference date.</span>
+          </div>
+          <div class="hero-point">
+            <strong>Performance modes</strong>
+            <span>Select a compression level to tune the interface for speed or balance.</span>
+          </div>
+          <div class="hero-point">
+            <strong>Monetization ready</strong>
+            <span>Built-in ad spaces with Google AdSense placeholders.</span>
+          </div>
+        </div>
+      </section>
+
+      <aside class="card hero-side" aria-label="Highlights">
+        <div>
+          <span class="inline-badge">Half-year milestone calculator</span>
+          <p class="lead" style="margin-top: 0.85rem; margin-bottom: 0;">
+            Perfect for parents, event planners, schools, social posts, and anyone who wants to know when a 6-month birthday lands.
+          </p>
+        </div>
+        <div class="stat-grid">
+          <div class="stat">
+            <div class="label">Responsive layout</div>
+            <div class="value">Mobile-first</div>
+          </div>
+          <div class="stat">
+            <div class="label">Calculation mode</div>
+            <div class="value" id="heroCompressionValue">Balanced</div>
+          </div>
+          <div class="stat">
+            <div class="label">Reference date</div>
+            <div class="value" id="heroReferenceValue">Today</div>
+          </div>
+          <div class="stat">
+            <div class="label">Monetization</div>
+            <div class="value">AdSense Ready</div>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </header>
+
+  <main>
+    <div class="container layout">
+      <div class="section-stack">
+        <section class="card calculator" id="calculator" aria-labelledby="calc-title">
+          <h2 id="calc-title">Half Birthday Calculator</h2>
+          <p class="hint">Choose a birth date, set an optional reference date, and select your preferred compression level to optimize the interface behavior.</p>
+
+          <div class="notice" id="errorNotice" role="alert" aria-live="polite"></div>
+
+          <form id="halfBirthdayForm" novalidate>
+            <div class="form-grid">
+              <div class="field">
+                <label for="birthDate">Birth date</label>
+                <input id="birthDate" name="birthDate" type="date" required />
+              </div>
+              <div class="field">
+                <label for="referenceDate">Reference date</label>
+                <input id="referenceDate" name="referenceDate" type="date" />
+              </div>
+              <div class="field">
+                <label for="compressionLevel">Compression level</label>
+                <select id="compressionLevel" name="compressionLevel">
+                  <option value="low">Low compression (visual-first)</option>
+                  <option value="medium" selected>Medium compression (balanced)</option>
+                  <option value="high">High compression (speed-first)</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="outputFormat">Date display format</label>
+                <select id="outputFormat" name="outputFormat">
+                  <option value="long" selected>Long format</option>
+                  <option value="short">Short format</option>
+                  <option value="iso">ISO format</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="actions">
+              <button type="submit" class="btn btn-primary">Calculate half birthday</button>
+              <button type="button" class="btn btn-secondary" id="resetBtn">Reset</button>
+            </div>
+          </form>
+
+          <section class="results" aria-live="polite" aria-atomic="true">
+            <div class="result-grid">
+              <article class="result-item">
+                <div class="kicker">Next half birthday</div>
+                <div class="main" id="nextHalfBirthday">—</div>
+                <div class="sub" id="nextHalfBirthdayMeta">Enter a birth date to calculate.</div>
+              </article>
+              <article class="result-item">
+                <div class="kicker">Most recent half birthday</div>
+                <div class="main" id="recentHalfBirthday">—</div>
+                <div class="sub" id="recentHalfBirthdayMeta">Your latest half-year milestone will appear here.</div>
+              </article>
+              <article class="result-item">
+                <div class="kicker">Days until next half birthday</div>
+                <div class="main" id="daysUntil">—</div>
+                <div class="sub" id="daysUntilMeta">Countdown updates based on your reference date.</div>
+              </article>
+              <article class="result-item">
+                <div class="kicker">Half-year age milestone</div>
+                <div class="main" id="halfAge">—</div>
+                <div class="sub" id="halfAgeMeta">Age milestones are shown as years.5 when applicable.</div>
+              </article>
+            </div>
+          </section>
+        </section>
+
+        <section class="card ad-slot banner" aria-label="Top banner ad placement">
+          <div>
+            <strong>Advertisement Space (Responsive Banner)</strong>
+            <small>Replace the ad slot ID below with your Google AdSense Ad Unit ID.</small>
+
+            <!-- Google AdSense Responsive Banner Ad -->
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+                 data-ad-slot="1234567890"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+              (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+          </div>
+        </section>
+
+        <section class="content-grid" id="how-it-works">
+          <article class="card content-card">
+            <h2>How the calculator works</h2>
+            <p class="hint">
+              A half birthday is typically six months after a person’s birth date. This calculator adds six months to each birthday year and finds the nearest previous and next half birthday relative to the selected reference date.
+            </p>
+          </article>
+          <article class="card content-card">
+            <h2>Compression level explained</h2>
+            <p class="hint">
+              The compression selector adjusts front-end presentation intensity. Low favors richer visuals, medium keeps a balanced experience, and high reduces decorative effects for faster rendering and lighter UI behavior.
+            </p>
+          </article>
+        </section>
+
+        <section class="card faq-card" id="faq">
+          <h2>Frequently asked questions</h2>
+          <div class="faq-list">
+            <details>
+              <summary>What is a half birthday?</summary>
+              <p>A half birthday occurs approximately six months after your date of birth and is often used for milestone celebrations or school-related cutoffs.</p>
+            </details>
+            <details>
+              <summary>Can I use this for babies and children?</summary>
+              <p>Yes. This calculator is useful for parents tracking infant milestones, party planning, and social media posts celebrating a 6-month birthday.</p>
+            </details>
+            <details>
+              <summary>Why does the compression selector exist?</summary>
+              <p>It gives users control over the website experience. Higher compression reduces interface effects and prioritizes speed, especially helpful on lower-powered devices.</p>
+            </details>
+            <details>
+              <summary>How do I add my AdSense ad IDs?</summary>
+              <p>Replace <strong>ca-pub-XXXXXXXXXXXXXXXX</strong> with your Google AdSense publisher ID and replace each <strong>data-ad-slot</strong> value with your own Ad Unit ID.</p>
+            </details>
+          </div>
+        </section>
+      </div>
+
+      <aside class="ad-panel" aria-label="Sidebar advertisements">
+        <section class="card ad-slot tall">
+          <div>
+            <strong>Sidebar Ad Space</strong>
+            <small>Ideal for a 300×600 or responsive display ad.</small>
+
+            <!-- Google AdSense Sidebar Ad -->
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+                 data-ad-slot="2345678901"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+              (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+          </div>
+        </section>
+
+        <section class="card ad-slot">
+          <div>
+            <strong>Additional Ad Placement</strong>
+            <small>Use this area for another responsive ad unit, affiliate banner, or promotion.</small>
+
+            <!-- Google AdSense Additional Ad -->
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+                 data-ad-slot="3456789012"
+                 data-ad-format="rectangle"
+                 data-full-width-responsive="true"></ins>
+            <script>
+              (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+          </div>
+        </section>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>
+        © <span id="year"></span> Half Birthday Calculator. Built with accessible HTML, responsive CSS, vanilla JavaScript, SEO meta tags, structured data, and monetization-ready ad placements.
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    const form = document.getElementById('halfBirthdayForm');
+    const birthDateInput = document.getElementById('birthDate');
+    const referenceDateInput = document.getElementById('referenceDate');
+    const compressionLevelInput = document.getElementById('compressionLevel');
+    const outputFormatInput = document.getElementById('outputFormat');
+    const resetBtn = document.getElementById('resetBtn');
+    const errorNotice = document.getElementById('errorNotice');
+
+    const nextHalfBirthdayEl = document.getElementById('nextHalfBirthday');
+    const nextHalfBirthdayMetaEl = document.getElementById('nextHalfBirthdayMeta');
+    const recentHalfBirthdayEl = document.getElementById('recentHalfBirthday');
+    const recentHalfBirthdayMetaEl = document.getElementById('recentHalfBirthdayMeta');
+    const daysUntilEl = document.getElementById('daysUntil');
+    const daysUntilMetaEl = document.getElementById('daysUntilMeta');
+    const halfAgeEl = document.getElementById('halfAge');
+    const halfAgeMetaEl = document.getElementById('halfAgeMeta');
+    const heroCompressionValueEl = document.getElementById('heroCompressionValue');
+    const heroReferenceValueEl = document.getElementById('heroReferenceValue');
+    const yearEl = document.getElementById('year');
+
+    yearEl.textContent = new Date().getFullYear();
+
+    const compressionLabels = {
+      low: 'Visual-first',
+      medium: 'Balanced',
+      high: 'Speed-first'
+    };
+
+    const todayLocalISO = getLocalISODate(new Date());
+    referenceDateInput.value = todayLocalISO;
+    heroReferenceValueEl.textContent = formatDisplayDate(new Date(referenceDateInput.value), outputFormatInput.value);
+    applyCompression(compressionLevelInput.value);
+
+    function getLocalISODate(date) {
+      const tzOffset = date.getTimezoneOffset() * 60000;
+      return new Date(date.getTime() - tzOffset).toISOString().slice(0, 10);
+    }
+
+    function showError(message) {
+      errorNotice.textContent = message;
+      errorNotice.classList.add('show');
+    }
+
+    function clearError() {
+      errorNotice.textContent = '';
+      errorNotice.classList.remove('show');
+    }
+
+    function applyCompression(level) {
+      document.body.setAttribute('data-compression', level);
+      heroCompressionValueEl.textContent = compressionLabels[level] || 'Balanced';
+    }
+
+    function parseDate(value) {
+      if (!value) return null;
+      const parts = value.split('-').map(Number);
+      return new Date(parts[0], parts[1] - 1, parts[2], 12, 0, 0, 0);
+    }
+
+    function addMonths(date, monthsToAdd) {
+      const year = date.getFullYear();
+      const month = date.getMonth();
+      const day = date.getDate();
+      const targetMonthIndex = month + monthsToAdd;
+      const firstOfTarget = new Date(year, targetMonthIndex, 1, 12, 0, 0, 0);
+      const lastOfTarget = new Date(firstOfTarget.getFullYear(), firstOfTarget.getMonth() + 1, 0, 12, 0, 0, 0);
+      return new Date(
+        firstOfTarget.getFullYear(),
+        firstOfTarget.getMonth(),
+        Math.min(day, lastOfTarget.getDate()),
+        12, 0, 0, 0
+      );
+    }
+
+    function diffInDays(fromDate, toDate) {
+      const msPerDay = 24 * 60 * 60 * 1000;
+      const utcFrom = Date.UTC(fromDate.getFullYear(), fromDate.getMonth(), fromDate.getDate());
+      const utcTo = Date.UTC(toDate.getFullYear(), toDate.getMonth(), toDate.getDate());
+      return Math.round((utcTo - utcFrom) / msPerDay);
+    }
+
+    function formatDisplayDate(date, format) {
+      if (!(date instanceof Date) || Number.isNaN(date.getTime())) return '—';
+      if (format === 'iso') return date.toISOString().slice(0, 10);
+      if (format === 'short') {
+        return new Intl.DateTimeFormat(undefined, {
+          year: 'numeric',
+          month: 'short',
+          day: 'numeric'
+        }).format(date);
+      }
+      return new Intl.DateTimeFormat(undefined, {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      }).format(date);
+    }
+
+    function startOfDay(date) {
+      return new Date(date.getFullYear(), date.getMonth(), date.getDate(), 12, 0, 0, 0);
+    }
+
+    function calculateHalfBirthday(birthDate, referenceDate) {
+      const birth = startOfDay(birthDate);
+      const ref = startOfDay(referenceDate);
+
+      if (ref < birth) {
+        throw new Error('The reference date cannot be earlier than the birth date.');
+      }
+
+      const initialHalf = addMonths(birth, 6);
+      let recent = initialHalf;
+      let next = initialHalf;
+      let halfCount = 1;
+
+      while (next < ref) {
+        recent = next;
+        next = addMonths(next, 12);
+        halfCount += 1;
+      }
+
+      if (next.getTime() === ref.getTime()) {
+        recent = next;
+      }
+
+      while (recent > ref) {
+        recent = addMonths(recent, -12);
+        halfCount -= 1;
+      }
+
+      let nextCount = halfCount;
+      if (next < ref) {
+        next = addMonths(next, 12);
+        nextCount += 1;
+      }
+
+      const yearsAtNextHalf = nextCount - 0.5;
+      const yearsAtRecentHalf = Math.max(0.5, nextCount - 1.0);
+      const daysUntilNext = diffInDays(ref, next);
+      const daysSinceRecent = diffInDays(recent, ref);
+
+      return {
+        next,
+        recent,
+        daysUntilNext,
+        daysSinceRecent,
+        nextHalfAge: yearsAtNextHalf,
+        recentHalfAge: yearsAtRecentHalf
+      };
+    }
+
+    function renderResults(data, format) {
+      nextHalfBirthdayEl.textContent = formatDisplayDate(data.next, format);
+      nextHalfBirthdayMetaEl.textContent = data.daysUntilNext === 0
+        ? 'Today is the half birthday.'
+        : `${data.daysUntilNext} day${data.daysUntilNext === 1 ? '' : 's'} remaining until the next half birthday.`;
+
+      recentHalfBirthdayEl.textContent = formatDisplayDate(data.recent, format);
+      recentHalfBirthdayMetaEl.textContent = data.daysSinceRecent === 0
+        ? 'The most recent half birthday is today.'
+        : `${data.daysSinceRecent} day${data.daysSinceRecent === 1 ? '' : 's'} since the most recent half birthday.`;
+
+      daysUntilEl.textContent = String(data.daysUntilNext);
+      daysUntilMetaEl.textContent = data.daysUntilNext === 0
+        ? 'Celebrate today.'
+        : 'Based on the selected reference date.';
+
+      halfAgeEl.textContent = `${data.nextHalfAge.toFixed(1)} years`;
+      halfAgeMetaEl.textContent = `Upcoming milestone: age ${data.nextHalfAge.toFixed(1)}. Most recent milestone: age ${data.recentHalfAge.toFixed(1)}.`;
+    }
+
+    function handleCalculation(event) {
+      if (event) event.preventDefault();
+      clearError();
+      applyCompression(compressionLevelInput.value);
+
+      const birthDate = parseDate(birthDateInput.value);
+      const referenceDate = parseDate(referenceDateInput.value || todayLocalISO);
+      const outputFormat = outputFormatInput.value;
+
+      heroReferenceValueEl.textContent = formatDisplayDate(referenceDate, outputFormat);
+
+      if (!birthDate) {
+        showError('Please select a valid birth date.');
+        return;
+      }
+
+      try {
+        const result = calculateHalfBirthday(birthDate, referenceDate);
+        renderResults(result, outputFormat);
+      } catch (error) {
+        showError(error.message || 'Something went wrong while calculating the half birthday.');
+      }
+    }
+
+    function resetResults() {
+      birthDateInput.value = '';
+      referenceDateInput.value = todayLocalISO;
+      compressionLevelInput.value = 'medium';
+      outputFormatInput.value = 'long';
+      applyCompression('medium');
+      heroReferenceValueEl.textContent = formatDisplayDate(parseDate(todayLocalISO), 'long');
+      clearError();
+
+      nextHalfBirthdayEl.textContent = '—';
+      nextHalfBirthdayMetaEl.textContent = 'Enter a birth date to calculate.';
+      recentHalfBirthdayEl.textContent = '—';
+      recentHalfBirthdayMetaEl.textContent = 'Your latest half-year milestone will appear here.';
+      daysUntilEl.textContent = '—';
+      daysUntilMetaEl.textContent = 'Countdown updates based on your reference date.';
+      halfAgeEl.textContent = '—';
+      halfAgeMetaEl.textContent = 'Age milestones are shown as years.5 when applicable.';
+    }
+
+    form.addEventListener('submit', handleCalculation);
+    resetBtn.addEventListener('click', resetResults);
+    compressionLevelInput.addEventListener('change', () => applyCompression(compressionLevelInput.value));
+    outputFormatInput.addEventListener('change', () => {
+      const referenceDate = parseDate(referenceDateInput.value || todayLocalISO);
+      heroReferenceValueEl.textContent = formatDisplayDate(referenceDate, outputFormatInput.value);
+      if (birthDateInput.value) handleCalculation();
+    });
+    referenceDateInput.addEventListener('change', () => {
+      heroReferenceValueEl.textContent = formatDisplayDate(parseDate(referenceDateInput.value || todayLocalISO), outputFormatInput.value);
+      if (birthDateInput.value) handleCalculation();
+    });
+  </script>
+</body>
+</html>
