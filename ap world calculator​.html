@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AP World Calculator | Responsive AP World History Score Estimator</title>
+  <meta name="description" content="Use this responsive AP World calculator to estimate your AP World History exam score. Adjust compression level, fine-tune scoring assumptions, and get an instant projected AP score." />
+  <meta name="keywords" content="AP World calculator, AP World History calculator, AP World History score calculator, APWH score estimator, AP exam calculator" />
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#0f172a" />
+  <meta property="og:title" content="AP World Calculator" />
+  <meta property="og:description" content="Estimate your AP World History score with adjustable compression levels and responsive scoring tools." />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="canonical" href="https://example.com/ap-world-calculator" />
+  <style>
+    :root {
+      --bg: #020617;
+      --panel: rgba(15, 23, 42, 0.82);
+      --panel-strong: rgba(15, 23, 42, 0.96);
+      --card: rgba(30, 41, 59, 0.9);
+      --text: #e2e8f0;
+      --muted: #94a3b8;
+      --accent: #38bdf8;
+      --accent-2: #22c55e;
+      --warn: #f59e0b;
+      --border: rgba(148, 163, 184, 0.18);
+      --shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+      --radius: 24px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(56, 189, 248, 0.14), transparent 28%),
+        radial-gradient(circle at bottom right, rgba(34, 197, 94, 0.12), transparent 24%),
+        linear-gradient(180deg, #020617 0%, #0f172a 45%, #111827 100%);
+      min-height: 100vh;
+      line-height: 1.5;
+    }
+
+    a { color: inherit; }
+
+    .container {
+      width: min(1120px, calc(100% - 2rem));
+      margin: 0 auto;
+    }
+
+    .hero {
+      padding: 3.5rem 0 1.5rem;
+    }
+
+    .hero-card {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 1.25rem;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: calc(var(--radius) + 4px);
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(16px);
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      font-size: .86rem;
+      padding: .45rem .8rem;
+      border-radius: 999px;
+      color: #dbeafe;
+      background: rgba(56, 189, 248, 0.12);
+      border: 1px solid rgba(56, 189, 248, 0.24);
+      margin-bottom: 1rem;
+    }
+
+    h1, h2, h3, p { margin-top: 0; }
+
+    h1 {
+      font-size: clamp(2rem, 4vw, 3.6rem);
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      margin-bottom: .9rem;
+    }
+
+    .subtext {
+      color: var(--muted);
+      font-size: 1.02rem;
+      max-width: 60ch;
+      margin-bottom: 1.1rem;
+    }
+
+    .hero-points {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .75rem;
+    }
+
+    .pill {
+      padding: .65rem .9rem;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(148, 163, 184, 0.08);
+      color: #dbeafe;
+      font-size: .92rem;
+    }
+
+    .hero-side {
+      display: grid;
+      gap: 1rem;
+      align-content: start;
+    }
+
+    .mini-stat {
+      background: rgba(15, 23, 42, 0.7);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 1rem;
+    }
+
+    .mini-stat .label {
+      color: var(--muted);
+      font-size: .88rem;
+      margin-bottom: .3rem;
+    }
+
+    .mini-stat strong {
+      display: block;
+      font-size: clamp(1.5rem, 3vw, 2.2rem);
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 1.25rem;
+      padding-bottom: 2rem;
+    }
+
+    .panel {
+      background: var(--panel-strong);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 1.35rem;
+      backdrop-filter: blur(18px);
+    }
+
+    .panel h2 {
+      font-size: 1.4rem;
+      margin-bottom: 1rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: .45rem;
+    }
+
+    .field.full { grid-column: 1 / -1; }
+
+    label {
+      font-weight: 600;
+      font-size: .95rem;
+    }
+
+    .hint {
+      color: var(--muted);
+      font-size: .82rem;
+      margin-top: -.15rem;
+    }
+
+    input,
+    select,
+    button {
+      font: inherit;
+    }
+
+    input,
+    select {
+      width: 100%;
+      padding: .9rem 1rem;
+      border-radius: 16px;
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      background: rgba(15, 23, 42, 0.9);
+      color: var(--text);
+      outline: none;
+      transition: border-color .2s ease, transform .2s ease, box-shadow .2s ease;
+    }
+
+    input:focus,
+    select:focus {
+      border-color: rgba(56, 189, 248, 0.7);
+      box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.12);
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .85rem;
+      margin-top: .5rem;
+    }
+
+    button {
+      border: 0;
+      cursor: pointer;
+      border-radius: 16px;
+      padding: .95rem 1.15rem;
+      font-weight: 700;
+      transition: transform .18s ease, opacity .18s ease, box-shadow .18s ease;
+    }
+
+    button:hover { transform: translateY(-1px); }
+    button:active { transform: translateY(0); }
+
+    .primary {
+      background: linear-gradient(135deg, var(--accent), #2563eb);
+      color: white;
+      box-shadow: 0 12px 30px rgba(37, 99, 235, 0.28);
+    }
+
+    .secondary {
+      background: rgba(148, 163, 184, 0.12);
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    .results {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .score-card {
+      background: linear-gradient(180deg, rgba(15, 23, 42, 0.96), rgba(30, 41, 59, 0.94));
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 1.2rem;
+    }
+
+    .score-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: .75rem 0;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.12);
+    }
+
+    .score-row:last-child { border-bottom: 0; }
+
+    .score-label {
+      color: var(--muted);
+      font-size: .92rem;
+    }
+
+    .big-score {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: .8rem;
+    }
+
+    .score-number {
+      font-size: clamp(3rem, 8vw, 4.8rem);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 1;
+    }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      padding: .55rem .85rem;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: .9rem;
+      background: rgba(34, 197, 94, 0.12);
+      color: #bbf7d0;
+      border: 1px solid rgba(34, 197, 94, 0.28);
+    }
+
+    .bar-wrap {
+      margin: 1rem 0 .5rem;
+    }
+
+    .bar-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: .9rem;
+      color: var(--muted);
+      margin-bottom: .5rem;
+    }
+
+    .bar {
+      width: 100%;
+      height: 14px;
+      border-radius: 999px;
+      background: rgba(148, 163, 184, 0.14);
+      overflow: hidden;
+      border: 1px solid rgba(148, 163, 184, 0.12);
+    }
+
+    .bar > span {
+      display: block;
+      height: 100%;
+      width: 0%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      transition: width .35s ease;
+    }
+
+    .footnote {
+      font-size: .84rem;
+      color: var(--muted);
+      margin-top: .8rem;
+    }
+
+    .thresholds,
+    .seo-copy {
+      margin-top: 1rem;
+      border-top: 1px solid rgba(148, 163, 184, 0.12);
+      padding-top: 1rem;
+    }
+
+    .threshold-list {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: .65rem;
+      margin-top: .75rem;
+    }
+
+    .threshold-item {
+      background: rgba(148, 163, 184, 0.08);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: .8rem;
+      text-align: center;
+    }
+
+    .threshold-item strong {
+      display: block;
+      font-size: 1.1rem;
+      margin-top: .2rem;
+    }
+
+    .seo-copy p,
+    .seo-copy li {
+      color: var(--muted);
+    }
+
+    .seo-copy ul {
+      padding-left: 1.1rem;
+      margin-bottom: 0;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    @media (max-width: 960px) {
+      .hero-card,
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .threshold-list {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 640px) {
+      .container {
+        width: min(100% - 1rem, 100%);
+      }
+
+      .hero { padding-top: 1rem; }
+
+      .hero-card,
+      .panel { padding: 1rem; border-radius: 20px; }
+
+      .grid,
+      .threshold-list {
+        grid-template-columns: 1fr;
+      }
+
+      .big-score,
+      .score-row,
+      .bar-label {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .actions button {
+        width: 100%;
+      }
+    }
+  </style>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "AP World Calculator",
+      "applicationCategory": "EducationalApplication",
+      "operatingSystem": "Any",
+      "description": "A responsive AP World History score calculator with adjustable compression levels and dynamic score estimation.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+  </script>
+</head>
+<body>
+  <header class="hero">
+    <div class="container">
+      <div class="hero-card">
+        <section>
+          <div class="badge">AP World History · Dynamic Score Estimator</div>
+          <h1>AP World Calculator</h1>
+          <p class="subtext">
+            Estimate your AP World History exam result with a fully responsive calculator. Choose a compression level,
+            enter your section performance, and instantly see your projected AP score, composite percentage, and scoring breakdown.
+          </p>
+          <div class="hero-points" aria-label="Feature highlights">
+            <span class="pill">Responsive on mobile, tablet, and desktop</span>
+            <span class="pill">Adjustable compression curve</span>
+            <span class="pill">Instant score updates</span>
+            <span class="pill">SEO-friendly structure</span>
+          </div>
+        </section>
+        <aside class="hero-side" aria-label="Calculator overview">
+          <div class="mini-stat">
+            <div class="label">Exam model</div>
+            <strong>MCQ + SAQ + DBQ + LEQ</strong>
+          </div>
+          <div class="mini-stat">
+            <div class="label">Compression options</div>
+            <strong>Strict · Standard · Lenient</strong>
+          </div>
+          <div class="mini-stat">
+            <div class="label">Live estimate</div>
+            <strong id="heroEstimate">Projected AP Score: 3</strong>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </header>
+
+  <main class="container layout">
+    <section class="panel" aria-labelledby="calculator-title">
+      <h2 id="calculator-title">Enter Your Scores</h2>
+      <form id="scoreForm" class="grid" novalidate>
+        <div class="field">
+          <label for="mcq">MCQ Correct</label>
+          <input id="mcq" name="mcq" type="number" min="0" max="55" value="35" inputmode="numeric" />
+          <div class="hint">Multiple-choice correct answers out of 55.</div>
+        </div>
+
+        <div class="field">
+          <label for="saq">SAQ Points</label>
+          <input id="saq" name="saq" type="number" min="0" max="9" value="6" inputmode="numeric" />
+          <div class="hint">Short-answer points out of 9.</div>
+        </div>
+
+        <div class="field">
+          <label for="dbq">DBQ Points</label>
+          <input id="dbq" name="dbq" type="number" min="0" max="7" value="4" inputmode="numeric" />
+          <div class="hint">Document-based question score out of 7.</div>
+        </div>
+
+        <div class="field">
+          <label for="leq">LEQ Points</label>
+          <input id="leq" name="leq" type="number" min="0" max="6" value="3" inputmode="numeric" />
+          <div class="hint">Long essay question score out of 6.</div>
+        </div>
+
+        <div class="field full">
+          <label for="compression">Compression Level</label>
+          <select id="compression" name="compression">
+            <option value="strict">Strict curve</option>
+            <option value="standard" selected>Standard curve</option>
+            <option value="lenient">Lenient curve</option>
+          </select>
+          <div class="hint">Compression changes the AP score thresholds to simulate a harsher or more forgiving scoring curve.</div>
+        </div>
+
+        <div class="field full">
+          <label for="customBias">Optimization Bias</label>
+          <select id="customBias" name="customBias">
+            <option value="balanced" selected>Balanced weighting</option>
+            <option value="writing">Favor written sections</option>
+            <option value="mcq">Favor multiple choice</option>
+          </select>
+          <div class="hint">Bias changes how aggressively the calculator values your strongest section type.</div>
+        </div>
+
+        <div class="actions full">
+          <button type="submit" class="primary">Calculate AP World Score</button>
+          <button type="button" class="secondary" id="resetBtn">Reset</button>
+        </div>
+      </form>
+    </section>
+
+    <aside class="panel results" aria-labelledby="results-title">
+      <h2 id="results-title">Estimated Result</h2>
+      <div class="score-card">
+        <div class="big-score">
+          <div>
+            <div class="score-label">Projected AP Score</div>
+            <div id="apScore" class="score-number">3</div>
+          </div>
+          <div id="passStatus" class="status">Borderline pass range</div>
+        </div>
+
+        <div class="score-row">
+          <div>
+            <div class="score-label">Weighted Composite</div>
+            <strong id="compositeScore">48.5 / 100</strong>
+          </div>
+          <div>
+            <div class="score-label">Compression</div>
+            <strong id="curveLabel">Standard curve</strong>
+          </div>
+        </div>
+
+        <div class="score-row">
+          <div>
+            <div class="score-label">Section Performance</div>
+            <strong id="sectionBreakdown">MCQ 31.8 · WR 16.7</strong>
+          </div>
+          <div>
+            <div class="score-label">Optimization Mode</div>
+            <strong id="biasLabel">Balanced weighting</strong>
+          </div>
+        </div>
+
+        <div class="bar-wrap">
+          <div class="bar-label">
+            <span>Score Strength</span>
+            <span id="strengthText">48.5%</span>
+          </div>
+          <div class="bar" aria-hidden="true"><span id="strengthBar"></span></div>
+        </div>
+
+        <p class="footnote" id="insightText">
+          Your estimate is based on a balanced AP World scoring model with live threshold compression.
+        </p>
+      </div>
+
+      <section class="thresholds" aria-labelledby="threshold-title">
+        <h3 id="threshold-title">Current AP Score Thresholds</h3>
+        <div id="thresholdList" class="threshold-list"></div>
+      </section>
+    </aside>
+  </main>
+
+  <section class="container panel seo-copy" aria-labelledby="about-title">
+    <h2 id="about-title">About This AP World Calculator</h2>
+    <p>
+      This AP World calculator is designed for students who want a fast and flexible way to estimate their AP World History exam result.
+      It blends multiple-choice and written responses into a weighted composite, then maps that composite to a projected AP score using the compression level you choose.
+    </p>
+    <ul>
+      <li>Strict compression uses tougher AP score thresholds.</li>
+      <li>Standard compression keeps thresholds in a typical middle range.</li>
+      <li>Lenient compression lowers thresholds to model a more favorable scoring curve.</li>
+      <li>Optimization bias lets you emphasize multiple-choice or writing strength.</li>
+    </ul>
+    <p>
+      Because AP scoring can vary by administration, this tool is best used as an estimator rather than an official predictor.
+    </p>
+  </section>
+
+  <script>
+    const elements = {
+      form: document.getElementById('scoreForm'),
+      mcq: document.getElementById('mcq'),
+      saq: document.getElementById('saq'),
+      dbq: document.getElementById('dbq'),
+      leq: document.getElementById('leq'),
+      compression: document.getElementById('compression'),
+      customBias: document.getElementById('customBias'),
+      apScore: document.getElementById('apScore'),
+      passStatus: document.getElementById('passStatus'),
+      compositeScore: document.getElementById('compositeScore'),
+      curveLabel: document.getElementById('curveLabel'),
+      sectionBreakdown: document.getElementById('sectionBreakdown'),
+      biasLabel: document.getElementById('biasLabel'),
+      strengthBar: document.getElementById('strengthBar'),
+      strengthText: document.getElementById('strengthText'),
+      insightText: document.getElementById('insightText'),
+      thresholdList: document.getElementById('thresholdList'),
+      heroEstimate: document.getElementById('heroEstimate'),
+      resetBtn: document.getElementById('resetBtn')
+    };
+
+    const baseThresholds = {
+      strict: { label: 'Strict curve', scores: { 5: 78, 4: 64, 3: 50, 2: 36, 1: 0 } },
+      standard: { label: 'Standard curve', scores: { 5: 72, 4: 58, 3: 44, 2: 30, 1: 0 } },
+      lenient: { label: 'Lenient curve', scores: { 5: 68, 4: 54, 3: 40, 2: 26, 1: 0 } }
+    };
+
+    const biasModes = {
+      balanced: {
+        label: 'Balanced weighting',
+        mcqMultiplier: 1,
+        writeMultiplier: 1,
+        insight: 'Balanced mode treats objective and written performance evenly.'
+      },
+      writing: {
+        label: 'Favor written sections',
+        mcqMultiplier: 0.96,
+        writeMultiplier: 1.08,
+        insight: 'Writing mode slightly boosts SAQ, DBQ, and LEQ impact for essay-strong students.'
+      },
+      mcq: {
+        label: 'Favor multiple choice',
+        mcqMultiplier: 1.08,
+        writeMultiplier: 0.96,
+        insight: 'MCQ mode increases the value of strong multiple-choice performance.'
+      }
+    };
+
+    function clamp(value, min, max) {
+      return Math.min(Math.max(value, min), max);
+    }
+
+    function readValues() {
+      return {
+        mcq: clamp(Number(elements.mcq.value) || 0, 0, 55),
+        saq: clamp(Number(elements.saq.value) || 0, 0, 9),
+        dbq: clamp(Number(elements.dbq.value) || 0, 0, 7),
+        leq: clamp(Number(elements.leq.value) || 0, 0, 6),
+        compression: elements.compression.value,
+        bias: elements.customBias.value
+      };
+    }
+
+    function calculateComposite(values) {
+      const mcqPercent = (values.mcq / 55) * 100;
+      const writingRaw = ((values.saq / 9) * 20) + ((values.dbq / 7) * 45) + ((values.leq / 6) * 35);
+      const writingPercent = writingRaw;
+
+      const mode = biasModes[values.bias] || biasModes.balanced;
+      const adjustedMcq = clamp(mcqPercent * 0.4 * mode.mcqMultiplier, 0, 43.5);
+      const adjustedWriting = clamp(writingPercent * 0.6 * mode.writeMultiplier, 0, 64.5);
+      const composite = clamp(adjustedMcq + adjustedWriting, 0, 100);
+
+      return {
+        composite,
+        mcqContribution: adjustedMcq,
+        writingContribution: adjustedWriting,
+        mcqPercent,
+        writingPercent,
+        mode
+      };
+    }
+
+    function mapScore(composite, compression) {
+      const thresholds = baseThresholds[compression] || baseThresholds.standard;
+      if (composite >= thresholds.scores[5]) return 5;
+      if (composite >= thresholds.scores[4]) return 4;
+      if (composite >= thresholds.scores[3]) return 3;
+      if (composite >= thresholds.scores[2]) return 2;
+      return 1;
+    }
+
+    function buildInsight(score, composite, compressionLabel, modeLabel, rawValues) {
+      if (score >= 5) {
+        return `Excellent projection. Your current inputs place you in the top AP range on the ${compressionLabel.toLowerCase()} using ${modeLabel.toLowerCase()}.`;
+      }
+      if (score === 4) {
+        return `Strong projection. A modest improvement in ${rawValues.mcq < 40 ? 'MCQ accuracy' : 'essay execution'} could move you toward a 5.`;
+      }
+      if (score === 3) {
+        return `Passing range. Focus on boosting your weakest section to create a more stable buffer above the 3 threshold.`;
+      }
+      if (score === 2) {
+        return `Below the typical passing range. Improving SAQ precision and one major essay component could raise your estimate quickly.`;
+      }
+      return `Early estimate. Use this AP World calculator to test better scoring combinations and track where gains matter most.`;
+    }
+
+    function renderThresholds(compression) {
+      const thresholds = baseThresholds[compression] || baseThresholds.standard;
+      elements.thresholdList.innerHTML = [5, 4, 3, 2, 1].map(score => `
+        <div class="threshold-item" aria-label="AP score ${score} threshold">
+          <div>AP ${score}</div>
+          <strong>${thresholds.scores[score]}+</strong>
+        </div>
+      `).join('');
+    }
+
+    function updateResults() {
+      const values = readValues();
+      const calculated = calculateComposite(values);
+      const score = mapScore(calculated.composite, values.compression);
+      const thresholdMeta = baseThresholds[values.compression] || baseThresholds.standard;
+
+      elements.apScore.textContent = score;
+      elements.heroEstimate.textContent = `Projected AP Score: ${score}`;
+      elements.curveLabel.textContent = thresholdMeta.label;
+      elements.biasLabel.textContent = calculated.mode.label;
+      elements.compositeScore.textContent = `${calculated.composite.toFixed(1)} / 100`;
+      elements.sectionBreakdown.textContent = `MCQ ${calculated.mcqContribution.toFixed(1)} · WR ${calculated.writingContribution.toFixed(1)}`;
+      elements.strengthText.textContent = `${calculated.composite.toFixed(1)}%`;
+      elements.strengthBar.style.width = `${calculated.composite}%`;
+      elements.insightText.textContent = `${buildInsight(score, calculated.composite, thresholdMeta.label, calculated.mode.label, values)} ${calculated.mode.insight}`;
+
+      let statusText = 'Needs improvement';
+      let statusBackground = 'rgba(245, 158, 11, 0.12)';
+      let statusColor = '#fde68a';
+      let statusBorder = 'rgba(245, 158, 11, 0.28)';
+
+      if (score >= 4) {
+        statusText = 'Strong scoring range';
+        statusBackground = 'rgba(34, 197, 94, 0.12)';
+        statusColor = '#bbf7d0';
+        statusBorder = 'rgba(34, 197, 94, 0.28)';
+      } else if (score === 3) {
+        statusText = 'Borderline pass range';
+        statusBackground = 'rgba(56, 189, 248, 0.12)';
+        statusColor = '#bae6fd';
+        statusBorder = 'rgba(56, 189, 248, 0.28)';
+      }
+
+      elements.passStatus.textContent = statusText;
+      elements.passStatus.style.background = statusBackground;
+      elements.passStatus.style.color = statusColor;
+      elements.passStatus.style.borderColor = statusBorder;
+
+      renderThresholds(values.compression);
+    }
+
+    elements.form.addEventListener('submit', function (event) {
+      event.preventDefault();
+      updateResults();
+    });
+
+    ['input', 'change'].forEach(evt => {
+      elements.form.addEventListener(evt, updateResults);
+    });
+
+    elements.resetBtn.addEventListener('click', function () {
+      elements.mcq.value = 35;
+      elements.saq.value = 6;
+      elements.dbq.value = 4;
+      elements.leq.value = 3;
+      elements.compression.value = 'standard';
+      elements.customBias.value = 'balanced';
+      updateResults();
+    });
+
+    updateResults();
+  </script>
+</body>
+</html>
